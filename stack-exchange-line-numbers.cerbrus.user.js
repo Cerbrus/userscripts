@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SE add line numbers
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      1.1
 // @description  Add line numbers to SE code blocks
 // @author       Cebrus
 //
@@ -37,6 +37,8 @@ function addLineNumbers() {
         if(c.querySelectorAll('.cerbrus-line-numbers').length) return;
 
         const length = Math.max(1, c.innerText.split(/\r\n|\r|\n/).length - 1);
+
+        if(length <= 1) return;
 
         const lineNumbers = document.createElement('div');
         lineNumbers.classList.add('cerbrus-line-numbers');
