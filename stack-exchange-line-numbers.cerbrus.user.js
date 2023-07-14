@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SE add line numbers
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.2
 // @description  Add line numbers to SE code blocks
 // @author       Cebrus
 //
@@ -33,10 +33,10 @@
 /* globals waitForKeyElements */
 
 function addLineNumbers() {
-    [...document.querySelectorAll('.s-code-block')].forEach(c => {
+    [...document.querySelectorAll('pre')].forEach(c => {
         if(c.querySelectorAll('.cerbrus-line-numbers').length) return;
 
-        const length = Math.max(1, c.innerText.split(/\r\n|\r|\n/).length - 1);
+        const length = Math.max(1, c.querySelector('code').innerText.split(/\r\n|\r|\n/).length - 1);
 
         if(length <= 1) return;
 
@@ -59,9 +59,9 @@ function addGlobalStyle(css) {
     head.appendChild(style);
 }
 
-waitForKeyElements('.hljs', addLineNumbers, false);
+waitForKeyElements('pre', addLineNumbers, false);
 addGlobalStyle(`
-pre.s-code-block {
+pre {
     position: relative;
 }
 .cerbrus-line-numbers {
@@ -74,4 +74,5 @@ pre.s-code-block {
     text-align: right;
     opacity: 0.5;
     pointer-events: none;
+    user-select: none;
 }`);
